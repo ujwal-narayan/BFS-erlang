@@ -5,12 +5,15 @@
 ** Hash Array Mapped Tries 
 http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.21.6279
 ** Recursive Structure 
-- The erlang equivalent of  Tree -> Leaf | Value [Chilren of type Tree]
-- Another way to do is : [(Value,Int, [Int])] -> [(Value,ParentID, [Children_ID])]
-
+*** The erlang equivalent of  Tree -> Leaf | Value [Chilren of type Tree]
+*** Another way to do is : [(Value,Int, [Int])] -> [(Value,ParentID, [Children_ID])]
+DONE                                                             
+ #+CAPTION: Graph for the data in `input1`
+#+NAME:   input1
+[[./images/input1.jpg]]
 ** EdgePairs 
 - Get the number of nodes, and a list of all connected edges 
 
 * Distributed / Sequential? 
-- Should the algorithm be distributed?
+- Should the algorithm be distributed?                                             
 - Will Sequential Suffice? 
