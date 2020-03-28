@@ -1,6 +1,17 @@
-* Study how BFS Algorithms can be implemented in Erlang. Implement them. Compare them. 
+* Study how BFS Algorithms can be implemented in Erlang. Implement them. Compare them
+** Assumptions: 
+  - The Graph is fully connected.
+  - Each node can have multiple children.
+  - Each node can only have one parent. 
+** Variations
+Major ways in which BFS Algorithm can vary:
+- Representation of the tree [[* Tree Representation ]] 
+- Some algorithmic change in the way we do BFS:
+  - Can also be distributed/ sequential [[* Distributed / Sequential?]]
 
-* Different ways we can represent the tree 
+
+
+* Tree Representation 
 ** TODO Adjacency Matrix
 
 ** TODO Hash Array Mapped Tries 
@@ -21,5 +32,4 @@ Sample Input Graph :
 - Get the number of nodes, and a list of all connected edges 
 
 * Distributed / Sequential? 
-- Should the algorithm be distributed?                                             
-- Will Sequential Suffice? 
+  Should the algorithm be distributed? Or will a sequential algorithm suffice? 
