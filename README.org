@@ -10,7 +10,7 @@ http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.21.6279
 DONE                                                             
  #+CAPTION: Graph for the data in `input1`
 #+NAME:   input1
-[[./images/input1.jpg]]
+[[./images/input1.png]]
 ** EdgePairs 
 - Get the number of nodes, and a list of all connected edges 
 
