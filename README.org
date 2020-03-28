@@ -1,17 +1,18 @@
 * Study how BFS Algorithms can be implemented in Erlang. Implement them. Compare them. 
 
 * Different ways we can represent the tree 
-** Adjacency Matrix
-** Hash Array Mapped Tries 
+** TODO Adjacency Matrix
+
+** TODO Hash Array Mapped Tries 
 http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.21.6279
 ** Recursive Structure 
-*** The erlang equivalent of  Tree -> Leaf | Value [Chilren of type Tree]
-*** Another way to do is : [(Value,Int, [Int])] -> [(Value,ParentID, [Children_ID])]
-DONE                                                             
+*** TODO The erlang equivalent of  Tree -> Leaf | Value [Chilren of type Tree]
+*** DONE Another way to do is : [(Value,Int, [Int])] -> [(Value,ParentID, [Children_ID])]
+    CLOSED: [2020-03-28 Sat 13:17]
  #+CAPTION: Graph for the data in `input1`
 #+NAME:   input1
 [[./images/input1.png]]
-** EdgePairs 
+** TODO EdgePairs 
 - Get the number of nodes, and a list of all connected edges 
 
 * Distributed / Sequential? 
