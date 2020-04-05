@@ -1,6 +1,6 @@
 -module('Graph').
--export([main/0, generateInitData/2, head/1, tail/1, bfs1/4, get_element_in_index/2, replace_element_in_list/3, get_input/3]).
-
+-export([main/0]).
+-compile(export_all).
 get_element_in_index(List, Index) ->
 	lists:nth(Index+1,List).
 
@@ -55,14 +55,45 @@ bfs1(Graph, CurInd, Key, Stack ) ->
             end
     end.
 
-bfs(Graph,TotalNodes,  CurNode, Visited, Traversal) ->
-	if 
-		CurNode == TotalNodes ->
-			Traversal;
+
+
+bfs(Graph, Node, Frontier, Visited, Traversal) ->
+	IsVis = get_element_in_index(Visited, Node),
+	if
+		IsVis == 0 ->
+			Kids = get_element_in_index(Graph, Node),
+			NewFrontier = Frontier ++ Kids,
+			NewVisisted = replace_element_in_list(Visited, Node,1),
+			NewTraversal = Traversal ++ [Node],
+			bfs(Graph, head(NewFrontier), tail(NewFrontier), NewVisisted, NewTraversal);
 		true ->
-			IsVisited = get_element_in_index(Visited, CurNode),
-			if
-				IsVisited == 0 ->
+			if 
+				Frontier == [] ->
+					{Visited, Traversal};
+				true ->
+					bfs(Graph, head(Frontier), tail(Frontier), Visited, Traversal)
+			end
+	end.
+
+
+do_bfs(Graph,Nodes, Node, Visited, Traversal) ->
+	if 
+		Node == Nodes ->
+			Traversal;
+		true -> 
+			IsVis = get_element_in_index(Visited, Node),
+			if 
+				IsVis == 0 ->
+					{NewVisited, NewTraversal}  = bfs(Graph, Node, [], Visited, Traversal),
+					do_bfs(Graph, Nodes, Node + 1, NewVisited, NewTraversal);
+				true ->
+					do_bfs(Graph, Nodes, Node + 1, Visited, Traversal)
+			end
+	end.
+
+		
+	
+	
 					
 	
 
@@ -92,9 +123,9 @@ main() ->
     M = list_to_integer(head(tail(X))),
 	InitData = generateInitData(N, []),
     Graph = get_input(N,M, InitData),
-    io:format("~w~n",[Graph]),
+%    io:format("~w~n",[Graph]),
 	Visited = generateInitVisted(N,[]),
-    Traversal = bfs(Graph,0,[0], Visited,[] ),
+    Traversal = do_bfs(Graph,N, 0,Visited, []  ),
     io:format("Traversal: ~p~n",[Traversal]).
 
 
