@@ -1,6 +1,6 @@
--module('Graph').
+-module('SeqBFS').
 -export([main/0]).
--compile(export_all).
+% -compile(export_all).
 get_element_in_index(List, Index) ->
 	lists:nth(Index+1,List).
 
