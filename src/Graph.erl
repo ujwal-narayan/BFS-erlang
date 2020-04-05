@@ -1,21 +1,31 @@
 -module('Graph').
+-export([main/0, generateInitData/2, head/1, tail/1, bfs1/4, get_element_in_index/2, replace_element_in_list/3, get_input/3]).
 
--export([main/0, get_nodes/3, head/1, tail/1, bfs1/4]).
+get_element_in_index(List, Index) ->
+	lists:nth(Index+1,List).
 
+			
+replace_element_in_list(List, Index, Value) ->
+	lists:sublist(List,Index) ++ [Value] ++ lists:nthtail(Index+1, List).	
+		
+	
 
-get_nodes(NumberOfNodes, NumberOfNodesLeft, Data) ->
-    if
-        NumberOfNodesLeft == 0 ->
-            Data;
-        true ->
-            Node = NumberOfNodes - NumberOfNodesLeft + 1,
-            Contents = string:trim(io:get_line('')),
-            X = (string:tokens(Contents, [$\s])),
-            Val = list_to_integer(head(X)),
-            Children = tointeger(tail(X)),
-            Data1 = Data ++ [[Node,Val,Children]],
-            get_nodes(NumberOfNodes,NumberOfNodesLeft-1,Data1)
-   end.
+get_input(NumberOfEdges, NumberOfEdgesLeft, Data) ->
+	if
+		NumberOfEdgesLeft == 0 ->
+			Data;
+		true ->
+			Contents = string:trim(io:get_line('')),
+			X = (string:tokens(Contents, [$\s])),
+			U = list_to_integer(head(X)),
+			V = list_to_integer(head(tail(X))),
+			OldUList = get_element_in_index(Data,U),
+			NewUList = OldUList ++ [V],
+			NewData = replace_element_in_list(Data, U, NewUList),
+			get_input(NumberOfEdges, NumberOfEdgesLeft -1, NewData)
+	end.
+
+			
 
 
 tointeger([]) ->
@@ -28,7 +38,7 @@ head([Head | _]) ->
 tail([_ | Rest]) ->
     Rest.
 
-bfs1(Graph, CurInd, Key, Stack) ->
+bfs1(Graph, CurInd, Key, Stack ) ->
     X = lists:nth(CurInd,Graph),
     Val = head(tail(X)),
     if
@@ -45,18 +55,46 @@ bfs1(Graph, CurInd, Key, Stack) ->
             end
     end.
 
+bfs(Graph,TotalNodes,  CurNode, Visited, Traversal) ->
+	if 
+		CurNode == TotalNodes ->
+			Traversal;
+		true ->
+			IsVisited = get_element_in_index(Visited, CurNode),
+			if
+				IsVisited == 0 ->
+					
+	
+
+generateInitData(N, Data) ->
+	if 
+		N == 0 ->
+			Data;
+		true ->
+			NewData = Data ++ [[]],
+			generateInitData(N-1,NewData)
+	end.
+			
+generateInitVisted(N,Data) ->
+	if 
+		N == 0 ->
+			Data;
+		true ->
+			NewData = Data ++ [0],
+			generateInitVisted(N-1,NewData)
+	end.
+
+
 main() ->
-    %% App 1: 
-    %% Enter the Number of Nodes (N), then in the next N lines enter the value at node n, and the children of node n,  if no children enter nothing. Enter the value to search for. Returns the node at which it is present else if not present at all returns -1.
     Contents = string:trim(io:get_line('')),
     X = (string:tokens(Contents, [$\s])),
     N = list_to_integer(head(X)),
-    Graph = get_nodes(N,N,[]),
+    M = list_to_integer(head(tail(X))),
+	InitData = generateInitData(N, []),
+    Graph = get_input(N,M, InitData),
     io:format("~w~n",[Graph]),
-    Contents1 = string:trim(io:get_line('')),
-    X1 = (string:tokens(Contents1, [$\s])),
-    Val = list_to_integer(head(X1)),
-    Ind = bfs1(Graph,1,Val,[1]),
-    io:format("Value found at Index: ~p~n",[Ind]).
+	Visited = generateInitVisted(N,[]),
+    Traversal = bfs(Graph,0,[0], Visited,[] ),
+    io:format("Traversal: ~p~n",[Traversal]).
 
 
