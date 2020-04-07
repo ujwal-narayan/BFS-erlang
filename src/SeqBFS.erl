@@ -29,32 +29,12 @@ get_input(NumberOfEdges, NumberOfEdgesLeft, Data) ->
 			
 
 
-tointeger([]) ->
-    [];
-tointeger([Head|Rest]) ->
-    [list_to_integer(Head) | tointeger(Rest)].
 
 head([Head | _]) ->
     Head.
 tail([_ | Rest]) ->
     Rest.
 
-bfs1(Graph, CurInd, Key, Stack ) ->
-    X = lists:nth(CurInd,Graph),
-    Val = head(tail(X)),
-    if
-        Key == Val ->
-            CurInd;
-        true ->
-            if
-                Stack == [] ->
-                    -1;
-            true ->
-                    Children = head(tail(tail(X))),
-                    NewStack = tail(Stack) ++ Children,
-                    bfs1(Graph, head(Stack),Key,NewStack)
-            end
-    end.
 
 
 
