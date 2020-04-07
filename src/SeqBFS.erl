@@ -1,5 +1,6 @@
 -module('SeqBFS').
--export([main/0]).
+-export([main/0, do_bfs/5, reset_and_do_bfs/4]).
+% -import([timer])
 % -compile(export_all).
 get_element_in_index(List, Index) ->
 	lists:nth(Index+1,List).
@@ -59,6 +60,7 @@ bfs1(Graph, CurInd, Key, Stack ) ->
 
 bfs(Graph, Node, Frontier, Visited, Traversal) ->
 	IsVis = get_element_in_index(Visited, Node),
+	% io:format("Node ~p~n",[Node]),
 	if
 		IsVis == 0 ->
 			Kids = get_element_in_index(Graph, Node),
@@ -92,7 +94,10 @@ do_bfs(Graph,Nodes, Node, Visited, Traversal) ->
 	end.
 
 		
-	
+
+reset_and_do_bfs(Graph, Nodes, Node, Traversal) ->
+   Visited = generateInitVisted(Nodes,[]),
+   do_bfs(Graph, Nodes, Node, Visited, Traversal).
 	
 					
 	
@@ -115,6 +120,34 @@ generateInitVisted(N,Data) ->
 			generateInitVisted(N-1,NewData)
 	end.
 
+printLoop([])-> ok;
+printLoop([H|T])->
+	io:format("~p ",[H]),
+	printLoop(T).
+
+
+test_avg(M, F, A, N) when N > 0 ->
+   L = test_loop(M, F, A, N, []),
+   Length = length(L),
+   Min = lists:min(L),
+   Max = lists:max(L),
+   Med = lists:nth(round((Length / 2)), lists:sort(L)),
+   Avg = round(lists:foldl(fun(X, Sum) -> X + Sum end, 0, L) / Length),
+   {ok, OFile} = file:open("Times.txt",[append]),
+   io:fwrite(OFile, "Range: ~b - ~b mics Median: ~b mics Average: ~b mics~n", [Min, Max, Med, Avg]),
+   Med.
+
+test_loop(_M, _F, _A, 0, List) ->
+	% io:format("Finished Test Loop~n"),
+   List;
+
+test_loop(M, F, A, N, List) ->
+
+	% io:format("Test Loop ~p~n",[N]),
+   {T, _Result} = timer:tc(M, F, A),
+   test_loop(M, F, A, N - 1, [T|List]).
+
+
 
 main() ->
     Contents = string:trim(io:get_line('')),
@@ -126,6 +159,9 @@ main() ->
 %    io:format("~w~n",[Graph]),
 	Visited = generateInitVisted(N,[]),
     Traversal = do_bfs(Graph,N, 0,Visited, []  ),
-    io:format("Traversal: ~p~n",[Traversal]).
+
+    % io:format("Traversal: ~p~n",[Traversal])
+    printLoop(Traversal),
+    test_avg('SeqBFS', 'reset_and_do_bfs', [Graph, N, 0, []], 5).
 
 

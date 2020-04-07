@@ -1,0 +1,1 @@
+Range: 55680 - 56466 mics Median: 55755 mics Average: 55902 mics

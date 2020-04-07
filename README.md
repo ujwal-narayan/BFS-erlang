@@ -10,6 +10,14 @@
 - [ ] Distributed BFS with Distributed Mem - 2D: Aaron
 - [ ] Generate data and benchmark all the systems : Athreya 
 
+## To Run Tests
+```
+python3 test.py <module name without extension>
+```
+For Example
+```
+python3 test.py SeqBFS
+```
 
 ## Algorithms
 
