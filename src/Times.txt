@@ -1,1 +1,13 @@
-Range: 55680 - 56466 mics Median: 55755 mics Average: 55902 mics
+Range: 0 - 5 mics Median: 0 mics Average: 1 mics
+Range: 1 - 13 mics Median: 1 mics Average: 4 mics
+Range: 41012 - 43218 mics Median: 41531 mics Average: 41758 mics
+Range: 131942 - 136416 mics Median: 134839 mics Average: 134765 mics
+Range: 88190 - 94424 mics Median: 88489 mics Average: 89736 mics
+Range: 140248 - 144532 mics Median: 143762 mics Average: 142767 mics
+Range: 6863782 - 7030221 mics Median: 7011526 mics Average: 6984149 mics
+Range: 1881083 - 1917239 mics Median: 1907413 mics Average: 1903244 mics
+Range: 2533157 - 2589183 mics Median: 2559954 mics Average: 2560198 mics
+Range: 288194 - 347450 mics Median: 337439 mics Average: 327515 mics
+Range: 1545229 - 1551152 mics Median: 1549989 mics Average: 1548768 mics
+Range: 62947379 - 67189107 mics Median: 65371835 mics Average: 64979267 mics
+Range: 166620993 - 197792009 mics Median: 181145385 mics Average: 182786000 mics

@@ -1,14 +1,14 @@
 -module('SeqBFS').
+-import(ral, [nth/2,nthtail/2, from_list/1, replace/3]).
 -export([main/0, do_bfs/5, reset_and_do_bfs/4]).
 % -import([timer])
 % -compile(export_all).
 get_element_in_index(List, Index) ->
-	lists:nth(Index+1,List).
+	ral:nth(Index+1,List).
 
 			
 replace_element_in_list(List, Index, Value) ->
-	lists:sublist(List,Index) ++ [Value] ++ lists:nthtail(Index+1, List).	
-		
+	ral:replace(Index+1,Value, List).	
 	
 
 get_input(NumberOfEdges, NumberOfEdgesLeft, Data) ->
@@ -30,8 +30,13 @@ get_input(NumberOfEdges, NumberOfEdgesLeft, Data) ->
 
 
 
+head([]) ->
+	[];
 head([Head | _]) ->
     Head.
+
+tail([]) ->
+	[];
 tail([_ | Rest]) ->
     Rest.
 
@@ -39,21 +44,26 @@ tail([_ | Rest]) ->
 
 
 bfs(Graph, Node, Frontier, Visited, Traversal) ->
-	IsVis = get_element_in_index(Visited, Node),
-	% io:format("Node ~p~n",[Node]),
 	if
-		IsVis == 0 ->
-			Kids = get_element_in_index(Graph, Node),
-			NewFrontier = Frontier ++ Kids,
-			NewVisisted = replace_element_in_list(Visited, Node,1),
-			NewTraversal = Traversal ++ [Node],
-			bfs(Graph, head(NewFrontier), tail(NewFrontier), NewVisisted, NewTraversal);
+		Node == [] ->
+			{Visited, Traversal};
 		true ->
-			if 
-				Frontier == [] ->
-					{Visited, Traversal};
+			IsVis = get_element_in_index(Visited, Node),
+			% io:format("Node ~p~n",[Node]),
+			if
+				IsVis == 0 ->
+					Kids = get_element_in_index(Graph, Node),
+					NewFrontier = Frontier ++ Kids,
+					NewVisisted = replace_element_in_list(Visited, Node,1),
+					NewTraversal = Traversal ++ [Node],
+					bfs(Graph, head(NewFrontier), tail(NewFrontier), NewVisisted, NewTraversal);
 				true ->
-					bfs(Graph, head(Frontier), tail(Frontier), Visited, Traversal)
+					if 
+						Frontier == [] ->
+							{Visited, Traversal};
+						true ->
+							bfs(Graph, head(Frontier), tail(Frontier), Visited, Traversal)
+					end
 			end
 	end.
 
@@ -85,7 +95,7 @@ reset_and_do_bfs(Graph, Nodes, Node, Traversal) ->
 generateInitData(N, Data) ->
 	if 
 		N == 0 ->
-			Data;
+			ral:from_list(Data);
 		true ->
 			NewData = Data ++ [[]],
 			generateInitData(N-1,NewData)
@@ -94,7 +104,7 @@ generateInitData(N, Data) ->
 generateInitVisted(N,Data) ->
 	if 
 		N == 0 ->
-			Data;
+			ral:from_list(Data);
 		true ->
 			NewData = Data ++ [0],
 			generateInitVisted(N-1,NewData)
@@ -140,7 +150,7 @@ main() ->
 	Visited = generateInitVisted(N,[]),
     Traversal = do_bfs(Graph,N, 0,Visited, []  ),
 
-    % io:format("Traversal: ~p~n",[Traversal])
+%    io:format("Traversal: ~p~n",[Traversal]),
     printLoop(Traversal),
     test_avg('SeqBFS', 'reset_and_do_bfs', [Graph, N, 0, []], 5).
 
