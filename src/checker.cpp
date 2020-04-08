@@ -29,11 +29,13 @@ int main(){
     vis.resize(n);
 
     int u;
+    set<int> uni;
     while(cin>>u){
         order.pb(u);
+        uni.insert(u);
     }
 
-    if(order.size() != n){
+    if(uni.size() != n){
         cerr<<"Size is "<<order.size()<<" not n="<<n<<endl;
         exit(1);
     }
