@@ -12,6 +12,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 modulen = sys.argv[1]
+os.system("erlc ral.erl".format(modulen))
 os.system("erlc {}.erl".format(modulen))
 os.system("g++ checker.cpp -o check.out")
 open('Times.txt', 'w').close()
