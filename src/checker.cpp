@@ -51,6 +51,7 @@ int main(){
             exit(1);
         }
         fron.erase(u);
+        vis[u] = 1;
         for(int v:g[u]){
             if(!vis[v]){
                 fron.insert(v);
