@@ -7,6 +7,7 @@
 
 	
 add_to_traversal(Traversal,Node) ->
+	io:format("~p ",[Node]),
 	ets:insert(Traversal,{0,Node}).
 
 mark_the_node_visited(VisitedTab,Node) ->
@@ -73,10 +74,9 @@ parallel_bfs(GraphTab,VisitedTab,FrontierTab,Traversal) ->
 call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,Node, N) ->
 	if 
 		Node == N ->
-			Ans = get_second_elements(ets:lookup(traversal,0)),
-			io:format("~p~n",[Ans]);
-			
+			ok;
 		true ->
+			io:format(""),
 			IsVis = checkifNodeVisited(VisitedTab,Node),
 			if 
 				IsVis == 0 ->
@@ -138,5 +138,4 @@ main() ->
 	get_input(N,M,GraphTab),
 	generateInitVisited(VisitedTab,N),
 	call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,0 , N),
-	io:format("").
-
+	io:format("~n").
