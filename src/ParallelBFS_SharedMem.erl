@@ -73,7 +73,8 @@ parallel_bfs(GraphTab,VisitedTab,FrontierTab,Traversal) ->
 call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,Node, N) ->
 	if 
 		Node == N ->
-			get_second_elements(ets:lookup(traversal,0));
+			Ans = get_second_elements(ets:lookup(traversal,0)),
+			io:format("~p~n",[Ans]);
 			
 		true ->
 			IsVis = checkifNodeVisited(VisitedTab,Node),
@@ -136,4 +137,6 @@ main() ->
 	Traversal = ets:new(traversal,[bag,public,named_table]),
 	get_input(N,M,GraphTab),
 	generateInitVisited(VisitedTab,N),
-	call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,0 , N).
+	call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,0 , N),
+	io:format("").
+
