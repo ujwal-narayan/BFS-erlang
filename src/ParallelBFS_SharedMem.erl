@@ -77,17 +77,40 @@ call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,Node, N) ->
 			ok;
 		true ->
 			io:format(""),
+			Nbrs = get_the_nbrs(GraphTab,Node),
+			Connected = lists:flatlength(Nbrs),
 			IsVis = checkifNodeVisited(VisitedTab,Node),
 			if 
 				IsVis == 0 ->
-					ets:insert(FrontierTab,{0,Node}),
-					parallel_bfs(GraphTab,VisitedTab,FrontierTab, Traversal),
-					call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,Node + 1 , N);
+					if 
+						Connected == 0 ->
+							call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,Node + 1 , N);
+						true -> 
+							ets:insert(FrontierTab,{0,Node}),
+							parallel_bfs(GraphTab,VisitedTab,FrontierTab, Traversal),
+							call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,Node + 1 , N)
+					end;
 				true ->
 					call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,Node + 1 , N)
 			end
 	end.
 				
+
+take_care_of_unconnected(GraphTab, VisitedTab,Node,N) ->
+	if 
+		Node == N ->
+			ok;
+		true ->
+			IsVis = checkifNodeVisited(VisitedTab,Node),
+			if 
+				IsVis == 0 ->
+					io:format("~p ",[Node]),
+					take_care_of_unconnected(GraphTab,VisitedTab,Node + 1, N);
+				true ->
+					take_care_of_unconnected(GraphTab,VisitedTab,Node + 1, N)
+			end
+	end.
+
 			
 head([]) ->
     [];	
@@ -138,4 +161,6 @@ main() ->
 	get_input(N,M,GraphTab),
 	generateInitVisited(VisitedTab,N),
 	call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,0 , N),
+	take_care_of_unconnected(GraphTab,VisitedTab,0,N),
+
 	io:format("~n").
