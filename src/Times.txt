@@ -1,2 +1,2 @@
-Range: 12 - 45 mics Median: 17 mics Average: 25 mics
-Range: 43 - 60 mics Median: 46 mics Average: 48 mics
+Range: 18 - 44 mics Median: 21 mics Average: 25 mics
+Range: 58 - 68 mics Median: 64 mics Average: 63 mics
