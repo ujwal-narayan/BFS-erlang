@@ -1,7 +1,7 @@
 -module('ParallelBFS_SharedMem').
 -import(ets,[lookup/2,insert/2, match_delete/2, new/2]).
 -import(lists,[flatlength/1]).
--export([main/0, parallel_bfs_element/5]).
+-export([main/0, parallel_bfs_element/5, reset_and_do_bfs/5 ]).
 % -compile(export_all).
 
 
@@ -69,6 +69,27 @@ parallel_bfs(GraphTab,VisitedTab,FrontierTab,Traversal) ->
 		true ->
 			ok
 	end.
+
+test_avg(M, F, A, N) when N > 0 ->
+   L = test_loop(M, F, A, N, []),
+   Length = length(L),
+   Min = lists:min(L),
+   Max = lists:max(L),
+   Med = lists:nth(round((Length / 2)), lists:sort(L)),
+   Avg = round(lists:foldl(fun(X, Sum) -> X + Sum end, 0, L) / Length),
+   {ok, OFile} = file:open("Times.txt",[append]),
+   io:fwrite(OFile, "Range: ~b - ~b mics Median: ~b mics Average: ~b mics~n", [Min, Max, Med, Avg]),
+   Med.
+
+test_loop(_M, _F, _A, 0, List) ->
+	% io:format("Finished Test Loop~n"),
+   List;
+
+test_loop(M, F, A, N, List) ->
+
+	% io:format("Test Loop ~p~n",[N]),
+   {T, _Result} = timer:tc(M, F, A),
+   test_loop(M, F, A, N - 1, [T|List]).
 
 
 call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,Node, N) ->
@@ -149,6 +170,13 @@ checkifNodeVisited(VisitedTab, N) ->
 	[{_,Val}] = ets:lookup(VisitedTab, N),
 	Val.
 	
+
+
+reset_and_do_bfs(GraphTab, VisitedTab, FrontierTab, Traversal,N) ->
+	generateInitVisited(VisitedTab,N),
+	call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,0 , N),
+	take_care_of_unconnected(GraphTab,VisitedTab,0,N).
+   
 main() ->
 	Contents = string:trim(io:get_line('')),
 	X = (string:tokens(Contents, [$\s])),
@@ -162,5 +190,6 @@ main() ->
 	generateInitVisited(VisitedTab,N),
 	call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,0 , N),
 	take_care_of_unconnected(GraphTab,VisitedTab,0,N),
-
-	io:format("~n").
+	io:format("~n"),
+	test_avg('ParallelBFS_SharedMem', 'reset_and_do_bfs', [GraphTab, VisitedTab, FrontierTab, Traversal,N], 5),
+	io:format("").
