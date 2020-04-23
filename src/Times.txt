@@ -3,3 +3,4 @@ Range: 18 - 44 mics Median: 21 mics Average: 25 mics
 Range: 58 - 68 mics Median: 64 mics Average: 63 mics
 =======
 >>>>>>> c480a68c358463d8d8b3e50a38b67d588bf53d2a
+Range: 225 - 302 mics Median: 228 mics Average: 243 mics

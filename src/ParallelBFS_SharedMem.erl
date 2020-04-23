@@ -191,5 +191,5 @@ main() ->
 	call_bfs_on_every_element(GraphTab,VisitedTab,FrontierTab,Traversal,0 , N),
 	take_care_of_unconnected(GraphTab,VisitedTab,0,N),
 	io:format("~n"),
-	test_avg('ParallelBFS_SharedMem', 'reset_and_do_bfs', [GraphTab, VisitedTab, FrontierTab, Traversal,N], 5),
+	% test_avg('ParallelBFS_SharedMem', 'reset_and_do_bfs', [GraphTab, VisitedTab, FrontierTab, Traversal,N], 5),
 	io:format("").
