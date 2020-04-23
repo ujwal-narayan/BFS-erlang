@@ -2,7 +2,7 @@
 -import(ral, [nth/2,nthtail/2, from_list/1, replace/3]).
 -export([main/0, do_bfs/5, reset_and_do_bfs/4]).
 % -import([timer])
-% -compile(export_all).
+-compile(export_all).
 get_element_in_index(List, Index) ->
 	ral:nth(Index+1,List).
 
